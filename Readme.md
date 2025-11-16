@@ -1,259 +1,233 @@
-# **Compiler Design Laboratory – Execution Guide**
+# 📘 Compiler Design Laboratory – Execution Guide
 
-This document explains how to run all **CD Lab Programs (Program 1–6)** exactly as implemented in this repository.
-Each program’s input and output is taken directly from the lab manual.
+to clone the repo
+git clone https://github.com/priyanshukumar05/java
 
----
+# 🧾 **PROGRAM 1 — `c1.l`**
 
+Lex program for pattern recognition
 
-# ✅ **Program 1 – `tokens.l` (LEX Program)**
-
-### **Recognizes:**
-
-* Strings ending with **00**
-* Strings containing **222222**
-* Every 5-symbol block has ≥ 2 fives
-* Binary strings starting with 1 divisible by 5
-* 10th symbol from right is 1
-* 4-digit numbers with digit-sum 9
-* 4-digit numbers in ascending order
-
-### **Run**
+### ✔ Compile & Run
 
 ```bash
-flex tokens.l
-gcc lex.yy.c -o p1 -lfl
-./p1 < input1.txt
+flex c1.l
+gcc lex.yy.c -o calc -lfl
+./calc < input1.txt
 ```
 
-### **Sample Input**
-
-```
-100
-12222222
-155551111
-1010
-1234567890
-1233
-1234
-1357
-```
-
-### **Sample Output** (from PDF)
+### ✔ Sample Output
 
 ```
 Ends with 00: 100
-Contains three consecutive 222's: 12222222
-Valid: every block of 5 contains at least two 5's: 155551111
-Binary string divisible by 5: 1010
+Contains three Consecutive 222's: 12222222
 10th symbol from the right is 1: 1234567890
-4-digit number with digit sum 9: 1233
-4-digit number with digits in ascending order: 1234
-4-digit number with digits in ascending order: 1357
+4 digit number with digit sum 9: 1233
+4 digit number with digits in ascending order: 1234
+4 digit number with digits in ascending order: 1357
 ```
 
 ---
 
+# ---------------------------------------------------------
 
-# ✅ **Program 2 – `space.l` (LEX Program)**
+# 🧾 **PROGRAM 2 — `c2.l`**
 
-### **Copies a file while replacing sequences of whitespace → single space**
+Lex program to remove extra whitespace
 
-### **Run**
+### ✔ Compile & Run
 
 ```bash
-flex space.l
-gcc lex.yy.c -o p2 -lfl
-./p2 < input.txt > output.txt
+flex c2.l
+gcc lex.yy.c -o calc -lfl
+./calc < input2.txt
 ```
 
-### **Input**
+### ✔ Sample Output
 
 ```
-This           is
-            a                        test.
-```
-
-### **Output**
-
-```
-This is a test.
+This is a test
 ```
 
 ---
 
+# ---------------------------------------------------------
 
-# ✅ **Program 3A – `parser_a.cpp`**
+# 🧾 **PROGRAM 3A — `c3a.cpp`**
 
-### **Recursive Descent Parser with Backtracking**
+Recursive Descent Parser (Grammar A)
 
-Grammar A:
-
-```
-A → ab | a
-S → cAd
-```
-
-### **Run**
+### ✔ Compile & Run
 
 ```bash
-g++ parser_a.cpp -o parser_a
-./parser_a
+g++ c3a.cpp -o calc
+./calc
 ```
 
-### **Input**
+### ✔ Sample Input
 
 ```
 cabd
 ```
 
-### **Output**
+### ✔ Output
 
 ```
-String accepted (Grammar A: A → ab | a)
+String Accepted
 ```
 
 ---
 
+# ---------------------------------------------------------
 
+# 🧾 **PROGRAM 3B — `c3b.cpp`**
 
-# ✅ **Program 3B – `parser_b.cpp`**
+Recursive Descent Parser (Grammar B)
 
-### **Recursive Descent Parser with Backtracking**
-
-Grammar B:
-
-```
-A → a | ab
-S → cAd
-```
-
-### **Run**
+### ✔ Compile & Run
 
 ```bash
-g++ parser_b.cpp -o parser_b
-./parser_b
+g++ c3b.cpp -o calc
+./calc
 ```
 
-### **Input**
+### ✔ Sample Input
 
 ```
 cabd
 ```
 
-### **Output**
+### ✔ Output
 
 ```
-String rejected (Grammar B: A → a | ab)
+String rejected
 ```
 
 ---
 
+# ---------------------------------------------------------
 
+# 🧾 **PROGRAM 4 — `c4.cpp`**
 
-# ✅ **Program 4 – `c4.cpp`**
+FIRST, FOLLOW, LL(1) Parsing Table
 
-### FIRST, FOLLOW, and LL(1) Parsing Table
-
-Grammar:
-
-```
-S → AB
-A → a | ε
-B → b
-```
-
-### **Run**
+### ✔ Compile & Run
 
 ```bash
-g++ c4.cpp -o p4
-./p4
+g++ c4.cpp -o calc
+./calc
 ```
 
-### **Input**
+### ✔ Sample Input
 
 ```
 a b $
 ```
 
-### **Output** (from PDF)
+### ✔ Output
 
 ```
 FIRST sets:
-S : { a ε }
-A : { a ε }
-B : { b }
+A = { a ε }
+B = { b }
+S = { a b }
 
 FOLLOW sets:
-S : { $ }
-A : { b }
-B : { $ }
+A = { b }
+B = { $ }
+S = { $ }
 
-Parsing Table:
-M[S,a] = A B
+LL(1) Parsing Table:
 M[A,a] = a
 M[A,b] = ε
 M[B,b] = b
+M[S,a] = A B
+M[S,b] = A B
 
-Parsing result: Input string is accepted.
+Parsing Result: Accepted
 ```
 
 ---
 
+# ---------------------------------------------------------
 
-# ✅ **Program 5 – `calc.l` + `calc.y`**
+# 🧾 **PROGRAM 5 — `c5.l` + `c5.y`**
 
-### YACC Expression Evaluator (Desktop Calculator)
+YACC Expression Evaluator (Calculator)
 
-### **Run**
+### ✔ Compile & Run
 
 ```bash
-flex calc.l
-yacc -d calc.y
+flex c5.l
+yacc -d c5.y
 gcc lex.yy.c y.tab.c -o calc -lfl
 ./calc
 ```
 
-### **Input**
+### ✔ Sample Input
 
 ```
-2 + 3 * 4
+2+3*10/2
 ```
 
-### **Output**
+### ✔ Output
 
 ```
-Result = 14
+Simple Calculator (type expressions, press Enter)
+Result = 10
 ```
 
 ---
 
+# ---------------------------------------------------------
 
-# ✅ **Program 6 – `expr.l` + `expr.y`**
+# 🧾 **PROGRAM 6 — `c6.l` + `c6.y`**
 
-### YACC – Generate Three-Address Code
+Generate Three-Address Code for Expressions
 
-### **Run**
+### ✔ Compile & Run
 
 ```bash
-flex expr.l
-yacc -d expr.y
-gcc lex.yy.c y.tab.c -o expr -lfl
-./expr
+flex c6.l
+yacc -d c6.y
+gcc lex.yy.c y.tab.c -o calc -lfl
+./calc
 ```
 
-### **Input**
+### ✔ Sample Input
 
 ```
-a = b + c * d
+a=b+c*d
 ```
 
-### **Output**
+### ✔ Output
 
 ```
-t1 = c * d
-t2 = b + t1
+t1 = c*d
+t2 = b+t1
 a = t2
 ```
 
+---
+
+# ---------------------------------------------------------
+
+# ☕ Java Programs (j1.java – j5.java)
+
+### ✔ Compile
+
+```bash
+javac j1.java
+```
+
+### ✔ Run
+
+```bash
+java j1
+```
+
+(Repeat same for j2.java … j5.java)
+
+---
+
+# 🎉 DONE
 
